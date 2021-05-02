@@ -9,4 +9,15 @@ SYNTAX
 C Syntax
 --------
 
+.. code-block:: c
+   :linenos:
+
+   #include <mpi.h>
+
+   int MPI_Bcast(void *buffer, int count, MPI_Datatype datatype,
+              int root, MPI_Comm comm);
+
+Description
+-----------
+
 Good stuff is here.

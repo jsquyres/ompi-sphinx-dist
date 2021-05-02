@@ -8,10 +8,11 @@
 
 import datetime
 
-year      = datetime.date.today().year
+# "project", "author", and "copyright" are Sphinx config variables.
+_year     = datetime.date.today().year
 project   = 'Open MPI'
 author    = 'The Open MPI Community'
-copyright = f'{year}, {author}'
+copyright = f'{_year}, {author}'
 
 # Read the Open MPI version data from the VERSION file.
 # Yes, "../VERSION" works correctly, even with VPATH builds.  :-)
@@ -32,10 +33,10 @@ for ompi_line in ompi_lines:
 
 # "release" and "version" are sphinx config variables -- assign them
 # to the computed Open MPI version number.
-major_minor = f"{ompi_data['major']}.{ompi_data['minor']}"
-series      = f"{major_minor}.x"
-release     = f"{major_minor}.{ompi_data['release']}{ompi_data['greek']}"
-version     = release
+_major_minor = f"{ompi_data['major']}.{ompi_data['minor']}"
+series       = f"{_major_minor}.x"
+release      = f"{_major_minor}.{ompi_data['release']}{ompi_data['greek']}"
+version      = release
 
 # -- General configuration ---------------------------------------------------
 
@@ -60,7 +61,7 @@ html_theme = 'sphinx_rtd_theme'
 
 # -- Open MPI-specific options -----------------------------------------------
 
-# This prolog is included in every file.  Put common stuff here.
+# The contents of "rst_prolog" are included in every file.  Put common stuff here.
 
 rst_prolog = f"""
 .. |mdash|  unicode:: U+02014 .. Em dash

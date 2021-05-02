@@ -16,4 +16,4 @@ Lotsa good stuff here.
 
 Open MPI version |ompi_ver|, in the series |ompi_series|.
 
-That's all there is, folks!
+That\'s all there is, folks!

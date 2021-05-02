@@ -1,3 +1,11 @@
+#
+# If this is a distribution tarball, the "html" and "man" dirs should
+# be here already.  And we never want to delete them (because they
+# came distributed with the tarball).
+#
+# If this is a git clone, these directories will be generated on the
+# fly, and should be deleted as part of "make clean".
+
 SPHINXBUILD ?= sphinx-build
 PYTHON3      = $(or $(shell which python3), $(shell which python))
 VENVDIR      = venv
@@ -21,33 +29,30 @@ EXTRA_DIST = \
         html \
         man
 
-help:
-	@$(SPHINXBUILD) -M help "$(srcdir)" "$(builddir)"
-
-man_MANS = man/openmpi.1
+man_MANS = \
+        man/openmpi.1
 
 # Simple rule to make a Python virtual environment and install Sphinx
 # in it.  This doesn't have to be how Sphinx is installed; it's just
 # an option for developers who want to use it.
-venv: Makefile
+venv:
 	virtualenv --python=$(PYTHON3) $(VENVDIR)
 	. ./$(VENVDIR)/bin/activate && pip install -r sphinx-requirements.txt
 
-# If there's a venv, activate it before invoking Sphinx.
-html man: Makefile $(RST_SOURCE)
+html: html/index.html
+html/index.html: $(RST_SOURCE)
 	@if test -d $(VENVDIR)/bin/activate/; then \
 	    . ./$(VENVDIR)/bin/activate; \
 	 fi; \
-	 $(SPHINXBUILD) -M $@ "$(srcdir)" "$(builddir)"
+	 $(SPHINXBUILD) -M html "$(srcdir)" "$(builddir)"
 
-.PHONY: html
-.PHONY: man
+man: man/openmpi.1
+man/openmpi.1: $(RST_SOURCE)
+	@if test -d $(VENVDIR)/bin/activate/; then \
+	    . ./$(VENVDIR)/bin/activate; \
+	 fi; \
+	 $(SPHINXBUILD) -M man "$(srcdir)" "$(builddir)"
 
-clean-local:
-	rm -rf \
-	    "$(builddir)/html" \
-	    "$(builddir)/man" \
-	    "$(builddir)/doctrees"
-
-distclean-local:
-	rm -rf $(VENVDIR)
+maintainer-clean-local:
+	-rm -rf html man doctrees
+	-rm -rf $(VENVDIR)
