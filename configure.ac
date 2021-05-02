@@ -1,6 +1,6 @@
 # -*- shell-script -*-
 
-AC_INIT([ompi-sphinx-dist], [0.5.0], [https://example.com], [osd])
+AC_INIT([ompi-sphinx-dist], [0.5.0], [https://example.com])
 AC_PREREQ(2.60)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR(config)
@@ -8,7 +8,7 @@ AC_CONFIG_MACRO_DIR(config)
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE([foreign dist-bzip2 subdir-objects no-define 1.13.4 tar-ustar])
+AM_INIT_AUTOMAKE([foreign subdir-objects no-define 1.13.4 tar-ustar])
 AM_SILENT_RULES([yes])
 
 AC_PROG_CC_C99

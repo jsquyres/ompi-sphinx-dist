@@ -11,5 +11,9 @@ Lotsa good stuff here.
 
    configuring
    building
+   MPI_Abort.3
+   MPI_Bcast.3
+
+Open MPI version |ompi_ver|, in the series |ompi_series|.
 
 That's all there is, folks!
