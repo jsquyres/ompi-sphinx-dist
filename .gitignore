@@ -19,7 +19,6 @@ config/compile
 config/config.guess
 config/config.sub
 config/depcomp
-config/distscript.sh
 config/install-sh
 config/libtool.m4
 config/ltmain.sh
