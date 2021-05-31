@@ -104,21 +104,21 @@ AS_IF([test $DOCS_CAN_INSTALL -eq 1],
       [AC_MSG_RESULT([yes])],
       [AC_MSG_RESULT([no])])
 
-# Provide --enable-build-docs CLI option.  This option does the
-# following:
-#
-# - "make clean" will remove the HTML and nroff docs
-# - fail/abort configure if we can't build the docs (per the above
-#   questions)
+# Provide --enable-install-docs CLI option.  This option will cause
+# configure to fail/abort if we cannot install the docs.  This is
+# expected to be useful for people who cannot use an
+# automatically-created Python virtual environment (e.g., if you're on
+# a machine not connected to the internet, and "pip install ..." will
+# fail).
+AC_ARG_ENABLE([install-docs],
+              [AS_HELP_STRING([--enable-install-docs],
+                              [Cause configure to fail/abort if we cannot install the docs.  This option is typically only useful in builds from git clones (where the docs are not already built).])])
+AS_IF([test $DOCS_CAN_INSTALL -eq 0 && test "$enable_install_docs" = "yes"],
+      [AC_MSG_WARN([--enable-install-docs was specified,])
+       AC_MSG_WARN([but configure cannot figure out how to build or install the docs])
+       AC_MSG_ERROR([Cannot continue])])
 
-
-
-
-#- Change the policy: if sphinx is not in your path, then we won't build
-#  the docs.  This is different than what we do with pandoc on master.
-#  * Note: this needs to be distinct from *installing* the docs (i.e., the
-#    git-clone-with-no-sphinx case vs. the production-tarball case)
-
+#########################
 
 AC_CONFIG_FILES([
         Makefile
