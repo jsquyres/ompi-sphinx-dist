@@ -46,8 +46,8 @@ endif # DOCS_CAN_INSTALL
 # Simple rule to make a Python virtual environment and install Sphinx
 # in it.  This doesn't have to be how Sphinx is installed; it's just
 # an option for developers who want to use it.
-venv:
-	virtualenv --python=$(PYTHON3) $(VENVDIR)
+ompi-docs-venv:
+	$(PYTHON3) -m venv $(VENVDIR)
 	. ./$(VENVDIR)/bin/activate && pip3 --disable-pip-version-check install -r sphinx-requirements.txt
 
 if DOCS_CAN_BUILD
@@ -90,8 +90,8 @@ docs_cannot_build:
 endif # DOCS_CAN_BUILD
 
 distclean-local:
-	-rm -rf venv
+	-rm -rf $(VENVDIR)
 
 maintainer-clean-local:
 	-rm -rf html man doctrees
-	-rm -rf $(VENVDIR) $(DOCS_TARGETS)
+	-rm -rf $(DOCS_TARGETS)

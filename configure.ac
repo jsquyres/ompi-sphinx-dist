@@ -35,7 +35,7 @@ AC_ARG_WITH([docs-venv],
 AC_MSG_CHECKING([if we should create a Python virtual enviornment to build docs])
 DOCS_VENV_TARGET=
 AS_IF([test "$with_docs_venv" = "yes"],
-      [DOCS_VENV_TARGET=venv
+      [DOCS_VENV_TARGET=ompi-docs-venv
        AC_MSG_RESULT([yes])],
       [AC_MSG_RESULT([no])])
 AC_SUBST(DOCS_VENV_TARGET)
