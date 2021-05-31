@@ -50,12 +50,13 @@ ompi-docs-venv:
 	$(PYTHON3) -m venv $(VENVDIR)
 	. ./$(VENVDIR)/bin/activate && pip3 --disable-pip-version-check install -r sphinx-requirements.txt
 
-if DOCS_CAN_BUILD
 html: html/index.html
+man: man/openmpi.1
+
+if DOCS_CAN_BUILD
 html/index.html: $(RST_SOURCE) $(DOCS_VENV_TARGET)
 	@ $(MAKE) run_sphinx TYPE=html
 
-man: man/openmpi.1
 man/openmpi.1: $(RST_SOURCE) $(DOCS_VENV_TARGET)
 	@ $(MAKE) run_sphinx TYPE=man
 
