@@ -2,7 +2,4 @@ _static
 _templates
 
 venv
-doctrees
-
-html
-man
+build

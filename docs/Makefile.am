@@ -9,48 +9,61 @@
 SPHINXBUILD ?= sphinx-build
 PYTHON3      = $(or $(shell which python3), $(shell which python))
 
-RST_SOURCE = \
+man_pages = \
+        MPI_Abort.3 \
+        MPI_Bcast.3 \
+        mpirun.1
+
+man_page_sources = $(addsuffix .rst, $(man_pages))
+
+docs_sources = \
         index.rst \
         configuring.rst \
-        building.rst \
-        MPI_Abort.3.rst \
-        MPI_Bcast.3.rst
+        building.rst
 
-# Putting the directory names "html" and "man" in the EXTRA_DIST
-# targets (via $(DOCS_TARGETS) means that Automake will effectively
-# invoke "make html" and "make man" as part of "make dist", which will
+# Putting the directory names "build/html" and "build/man" in the
+# EXTRA_DIST targets means that Automake will effectively invoke "make
+# build/html" and "make build/man" as part of "make dist", which will
 # conveniently fail if sphinx-build is not available.  Specifically:
 # it'll fail to make a tarball if you don't have Sphinx.
 EXTRA_DIST = \
-        $(RST_SOURCE) \
+        $(docs_sources) \
+        $(man_page_sources) \
         conf.py \
         sphinx-requirements.txt \
-        html \
-        man
+        build/html \
+        build/man
 
-man_MANS =
+dist_man_MANS =
 BUILT_SOURCES =
 
 if DOCS_CAN_BUILD
 # We don't install the HTML docs
-BUILT_SOURCES += html
+BUILT_SOURCES += build/html
 # We don't need to list the man pages here (see below)
 endif # DOCS_CAN_BUILD
 
 if DOCS_CAN_INSTALL
 # This will implicitly cause the man pages to be built, too
-man_MANS += man/openmpi.1
+# JMS Automake won't parse "$(addprefix build/man, $(man_pages))" --
+# temporarily list all the man pages here until we figure out
+# something better.  Grumble.
+dist_man_MANS += \
+        build/man/MPI_Abort.3 \
+        build/man/MPI_Bcast.3 \
+        build/man/mpirun.1
 endif # DOCS_CAN_INSTALL
 
-html: html/index.html
-man: man/openmpi.1
+build/html: build/html/index.html
+# This is a token man page that will cause all the rest to get generated.
+build/man: build/man/MPI_Abort.3
 
 if DOCS_CAN_BUILD
-html/index.html: $(RST_SOURCE) $(DOCS_VENV_TARGET)
-	$(SPHINXBUILD) -M html "$(srcdir)" "$(builddir)"
+build/html/index.html: $(docs_sources) $(man_page_sources) conf.py
+	$(SPHINXBUILD) -b html "$(srcdir)" "$(builddir)/build/html"
 
-man/openmpi.1: $(RST_SOURCE) $(DOCS_VENV_TARGET)
-	$(SPHINXBUILD) -M man "$(srcdir)" "$(builddir)"
+build/man/MPI_Abort.3: $(man_page_sources) conf.py
+	$(SPHINXBUILD) -b man "$(srcdir)" "$(builddir)/build/man"
 
 else # DOCS_CAN_BUILD
 
@@ -58,9 +71,9 @@ else # DOCS_CAN_BUILD
 # dependency, but rather invoke "$(MAKE) docs_cannot_build" only if
 # the target files do not exist and make decides that we need to build
 # it.
-html/index.html:
+build/html/index.html:
 	$(MAKE) docs_cannot_build
-man/openmpi.1:
+build/man/openmpi.1:
 	$(MAKE) docs_cannot_build
 
 .PHONY: docs_cannot_build
@@ -73,9 +86,6 @@ docs_cannot_build:
 
 endif # DOCS_CAN_BUILD
 
-distclean-local:
-	-rm -rf $(VENVDIR)
-
 maintainer-clean-local:
-	-rm -rf html man doctrees
+	-rm -rf build
 	-rm -rf $(DOCS_TARGETS)

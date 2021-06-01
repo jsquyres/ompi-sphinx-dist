@@ -65,6 +65,13 @@ exclude_patterns = ['html', 'man', 'Thumbs.db', '.DS_Store', 'venv']
 html_theme = 'sphinx_rtd_theme'
 
 
+# -- Options for man page output ---------------------------------------------
+
+man_pages = [('MPI_Abort.3', 'MPI_Abort', 'Abort MPI applications', author, 3),
+             ('MPI_Bcast.3', 'MPI_Bcast', 'Send a broadcast', author, 3),
+             ('mpirun.1', 'mpirun', 'Launch Open MPI applications', author, 1),
+             ]
+
 # -- Open MPI-specific options -----------------------------------------------
 
 # The contents of "rst_prolog" are included in every file.  Put common stuff here.

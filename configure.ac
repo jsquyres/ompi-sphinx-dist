@@ -43,7 +43,7 @@ AS_IF([test "$with_docs_venv" = "yes"],
              [ # Check for the Python modules we need
               missing_modules=
               for line in `egrep -v '^#' $abs_srcdir/docs/sphinx-requirements.txt`; do
-                  pip_module=`echo $line | cut -d= -f1`
+                  pip_module=`echo $line | cut -d= -f1 | cut -d\> -f1 | cut -d\< -f1`
                   python_module=`echo $pip_module | sed 's/-/_/g'`
                   echo "Testing python import of: $python_module" >&5
                   python3 -c "import $python_module" >&5 2>&5
@@ -72,7 +72,7 @@ AS_IF([test $DOCS_CAN_BUILD -eq 1], [AC_MSG_RESULT([yes])])
 
 AC_MSG_CHECKING([if docs are already present])
 DOCS_ALREADY_PRESENT=0
-AS_IF([test -d $abs_srcdir/docs/html && test -d $abs_srcdir/docs/man],
+AS_IF([test -d $abs_srcdir/docs/build-html && test -d $abs_srcdir/docs/build-man],
       [DOCS_ALREADY_PRESENT=1])
 AS_IF([test $DOCS_ALREADY_PRESENT -eq 1],
       [AC_MSG_RESULT([yes])],
