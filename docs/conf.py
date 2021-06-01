@@ -14,6 +14,12 @@ project   = 'Open MPI'
 author    = 'The Open MPI Community'
 copyright = f'{_year}, {author}'
 
+# Some versions of Sphinx changed the default value of this param
+# (cough cough 4.0.0 and 4.0.1).  Set it specifically to the value
+# that we want: False (i.e., don't generate man pages in
+# man/<SECTION>/ subdirectories).
+man_make_section_directory = False
+
 # Read the Open MPI version data from the VERSION file.
 # Yes, "../VERSION" works correctly, even with VPATH builds.  :-)
 with open(f"../VERSION") as fp:

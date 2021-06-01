@@ -8,7 +8,6 @@
 
 SPHINXBUILD ?= sphinx-build
 PYTHON3      = $(or $(shell which python3), $(shell which python))
-VENVDIR      = $(top_builddir)/docs/ompi-docs-venv
 
 RST_SOURCE = \
         index.rst \
@@ -43,31 +42,15 @@ if DOCS_CAN_INSTALL
 man_MANS += man/openmpi.1
 endif # DOCS_CAN_INSTALL
 
-# Simple rule to make a Python virtual environment and install Sphinx
-# in it.  This doesn't have to be how Sphinx is installed; it's just
-# an option for developers who want to use it.
-ompi-docs-venv:
-	$(PYTHON3) -m venv $(VENVDIR)
-	. ./$(VENVDIR)/bin/activate && pip3 --disable-pip-version-check install -r sphinx-requirements.txt
-
 html: html/index.html
 man: man/openmpi.1
 
 if DOCS_CAN_BUILD
 html/index.html: $(RST_SOURCE) $(DOCS_VENV_TARGET)
-	@ $(MAKE) run_sphinx TYPE=html
+	$(SPHINXBUILD) -M html "$(srcdir)" "$(builddir)"
 
 man/openmpi.1: $(RST_SOURCE) $(DOCS_VENV_TARGET)
-	@ $(MAKE) run_sphinx TYPE=man
-
-# If there's a venv dir present, activate before running Sphinx.
-run_sphinx:
-	@if test -r $(VENVDIR)/bin/activate; then \
-	    . ./$(VENVDIR)/bin/activate && \
-	        $(SPHINXBUILD) -M $(TYPE) "$(srcdir)" "$(builddir)"; \
-	 else \
-	    $(SPHINXBUILD) -M $(TYPE) "$(srcdir)" "$(builddir)"; \
-	 fi
+	$(SPHINXBUILD) -M man "$(srcdir)" "$(builddir)"
 
 else # DOCS_CAN_BUILD
 

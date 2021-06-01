@@ -24,22 +24,6 @@ cd $srcdir
 abs_srcdir=`pwd`
 cd "$abs_builddir"
 
-# Does the user want us to build a Python venv for building the docs?
-#
-# NOTE: we don't actually make the venv here during configure -- it'll
-# be built later, during "make".
-
-AC_ARG_WITH([docs-venv],
-            [AS_HELP_STRING([--with-docs-venv],
-                            [Create a Python virtual environment and install required modules for building the Open MPI documentation])])
-AC_MSG_CHECKING([if we should create a Python virtual enviornment to build docs])
-DOCS_VENV_TARGET=
-AS_IF([test "$with_docs_venv" = "yes"],
-      [DOCS_VENV_TARGET=ompi-docs-venv
-       AC_MSG_RESULT([yes])],
-      [AC_MSG_RESULT([no])])
-AC_SUBST(DOCS_VENV_TARGET)
-
 # Can we build the docs?
 #
 # - If $with_docs_venv==yes, then assume yes
@@ -58,7 +42,7 @@ AS_IF([test "$with_docs_venv" = "yes"],
              [AC_MSG_RESULT([no (cannot find sphinx-build executable)])],
              [ # Check for the Python modules we need
               missing_modules=
-              for line in `cat $abs_srcdir/docs/sphinx-requirements.txt`; do
+              for line in `egrep -v '^#' $abs_srcdir/docs/sphinx-requirements.txt`; do
                   pip_module=`echo $line | cut -d= -f1`
                   python_module=`echo $pip_module | sed 's/-/_/g'`
                   echo "Testing python import of: $python_module" >&5
