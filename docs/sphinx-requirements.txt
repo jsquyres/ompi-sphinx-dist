@@ -12,7 +12,7 @@
 #
 #        pip3 install -r sphinx-requirements.txt
 #
-#    The "sphinx-build" execuable was *probably* installed somewhere
+#    The "sphinx-build" executable was *probably* installed somewhere
 #    that is already in your PATH.  But you should probably double
 #    check to make sure.
 #

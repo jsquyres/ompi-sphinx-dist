@@ -1,16 +1,15 @@
 MPI_Bcast
-~~~~~~~~~
+=========
 
 ``MPI_Bcast`` - Do a broadcast.
 
 SYNTAX
-======
+------
 
 C Syntax
---------
+~~~~~~~~
 
 .. code-block:: c
-   :linenos:
 
    #include <mpi.h>
 
@@ -18,6 +17,6 @@ C Syntax
               int root, MPI_Comm comm);
 
 Description
------------
+~~~~~~~~~~~
 
 Good stuff is here.

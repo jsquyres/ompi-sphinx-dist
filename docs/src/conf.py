@@ -67,10 +67,20 @@ html_theme = 'sphinx_rtd_theme'
 
 # -- Options for man page output ---------------------------------------------
 
-man_pages = [('MPI_Abort.3', 'MPI_Abort', 'This is from the conf.py file', author, 3),
-             ('MPI_Bcast.3', 'MPI_Bcast', 'This is from the conf.py file', author, 3),
-             ('mpirun.1', 'mpirun', 'Launch Open MPI applications', author, 1),
-             ]
+# Harumi to write some Python here to go search the tree and extract
+# the tuples information especially paired with ".. py:function..."
+# (or whatever) to pull out the description instead of hard-coding
+# them.
+
+man_pages = [
+    ('ompi-man/man3/MPI_Abort.3', 'MPI_Abort', 'This is from the conf.py file', author, 3),
+    ('ompi-man/man3/MPI_Bcast.3', 'MPI_Bcast', 'This is from the conf.py file', author, 3),
+    ('ompi-man/man1/mpirun.1', 'mpirun', 'Launch Open MPI applications', author, 1),
+
+    ('oshmem-man/man3/shmem_init.3', 'shmem_init', 'This is from the conf.py file', author, 3),
+    ('oshmem-man/man3/shmem_broadcast.3', 'shmem_broadcast', 'This is from the conf.py file', author, 3),
+    ('oshmem-man/man1/oshrun.1', 'oshrun', 'Launch OpenSHMEM applications', author, 1),
+]
 
 # -- Open MPI-specific options -----------------------------------------------
 

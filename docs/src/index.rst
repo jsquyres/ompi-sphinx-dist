@@ -11,7 +11,8 @@ Lotsa good stuff here.
 
    configuring
    building
-   man_pages
+   ompi-man/index
+   oshmem-man/index
 
 Open MPI version |ompi_ver|, in the series |ompi_series|.
 

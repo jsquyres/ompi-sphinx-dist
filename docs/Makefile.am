@@ -9,18 +9,37 @@
 SPHINXBUILD ?= sphinx-build
 PYTHON3      = $(or $(shell which python3), $(shell which python))
 
-man_pages = \
-        MPI_Abort.3 \
-        MPI_Bcast.3 \
+ompi_man1_pages = \
         mpirun.1
+ompi_man3_pages = \
+        MPI_Abort.3 \
+        MPI_Bcast.3
 
-man_page_sources = $(addprefix src/, $(addsuffix .rst, $(man_pages)))
+oshmem_man1_pages = \
+        oshrun.1
+oshmem_man3_pages = \
+        shmem_init.3 \
+        shmem_broadcast.3
+
+ompi_man_page_sources = \
+        $(addprefix src/ompi-man/man1/, $(addsuffix .rst, $(ompi_man1_pages))) \
+        $(addprefix src/ompi-man/man3/, $(addsuffix .rst, $(ompi_man3_pages)))
+oshmem_man_page_sources = \
+        $(addprefix src/oshmem-man/man1/, $(addsuffix .rst, $(oshmem_man1_pages))) \
+        $(addprefix src/oshmem-man/man3/, $(addsuffix .rst, $(oshmem_man3_pages)))
+
+man_page_sources = $(ompi_man_page_sources) $(oshmem_man_page_sources)
 
 docs_sources = \
         src/index.rst \
         src/configuring.rst \
         src/building.rst \
-        src/man_pages.rst
+        src/ompi-man/index.rst \
+        src/ompi-man/man1-index.rst \
+        src/ompi-man/man3-index.rst \
+        src/oshmem-man/index.rst \
+        src/oshmem-man/man1-index.rst \
+        src/oshmem-man/man3-index.rst
 
 # Putting the directory names "build/html" and "build/man" in the
 # EXTRA_DIST targets means that Automake will effectively invoke "make
@@ -52,7 +71,10 @@ if DOCS_CAN_INSTALL
 dist_man_MANS += \
         build/man/MPI_Abort.3 \
         build/man/MPI_Bcast.3 \
-        build/man/mpirun.1
+        build/man/mpirun.1 \
+        build/man/shmem_init.3 \
+        build/man/shmem_broadcast.3 \
+        build/man/oshrun.1
 endif # DOCS_CAN_INSTALL
 
 build/html: build/html/index.html
