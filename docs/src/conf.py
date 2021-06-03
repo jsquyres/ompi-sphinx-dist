@@ -22,7 +22,7 @@ man_make_section_directory = False
 
 # Read the Open MPI version data from the VERSION file.
 # Yes, "../VERSION" works correctly, even with VPATH builds.  :-)
-with open(f"../VERSION") as fp:
+with open(f"../../VERSION") as fp:
     ompi_lines = fp.readlines()
 
 ompi_data = dict()

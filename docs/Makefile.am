@@ -14,12 +14,13 @@ man_pages = \
         MPI_Bcast.3 \
         mpirun.1
 
-man_page_sources = $(addsuffix .rst, $(man_pages))
+man_page_sources = $(addprefix src/, $(addsuffix .rst, $(man_pages)))
 
 docs_sources = \
-        index.rst \
-        configuring.rst \
-        building.rst
+        src/index.rst \
+        src/configuring.rst \
+        src/building.rst \
+        src/man_pages.rst
 
 # Putting the directory names "build/html" and "build/man" in the
 # EXTRA_DIST targets means that Automake will effectively invoke "make
@@ -29,7 +30,7 @@ docs_sources = \
 EXTRA_DIST = \
         $(docs_sources) \
         $(man_page_sources) \
-        conf.py \
+        src/conf.py \
         sphinx-requirements.txt \
         build/html \
         build/man
@@ -59,11 +60,11 @@ build/html: build/html/index.html
 build/man: build/man/MPI_Abort.3
 
 if DOCS_CAN_BUILD
-build/html/index.html: $(docs_sources) $(man_page_sources) conf.py
-	$(SPHINXBUILD) -b html "$(srcdir)" "$(builddir)/build/html"
+build/html/index.html: $(docs_sources) $(man_page_sources) src/conf.py
+	$(SPHINXBUILD) -b html "$(srcdir)/src" "$(builddir)/build/html"
 
-build/man/MPI_Abort.3: $(man_page_sources) conf.py
-	$(SPHINXBUILD) -b man "$(srcdir)" "$(builddir)/build/man"
+build/man/MPI_Abort.3: $(man_page_sources) src/conf.py
+	$(SPHINXBUILD) -b man "$(srcdir)/src" "$(builddir)/build/man"
 
 else # DOCS_CAN_BUILD
 
