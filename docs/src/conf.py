@@ -67,8 +67,8 @@ html_theme = 'sphinx_rtd_theme'
 
 # -- Options for man page output ---------------------------------------------
 
-man_pages = [('MPI_Abort.3', 'MPI_Abort', 'Abort MPI applications', author, 3),
-             ('MPI_Bcast.3', 'MPI_Bcast', 'Send a broadcast', author, 3),
+man_pages = [('MPI_Abort.3', 'MPI_Abort', 'This is from the conf.py file', author, 3),
+             ('MPI_Bcast.3', 'MPI_Bcast', 'This is from the conf.py file', author, 3),
              ('mpirun.1', 'mpirun', 'Launch Open MPI applications', author, 1),
              ]
 
